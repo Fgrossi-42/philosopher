@@ -6,7 +6,7 @@
 /*   By: fgrossi <fgrossi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:48:59 by fgrossi           #+#    #+#             */
-/*   Updated: 2022/04/27 15:51:29 by fgrossi          ###   ########.fr       */
+/*   Updated: 2022/04/28 11:45:43 by fgrossi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,29 @@ int	check(char **av, int ac)
 
 t_philo	**philo_init(t_args *table)
 {
-	t_philo	**philo;
+	t_philo	**ph;
 	int		i;
 
-	philo = (t_philo **)malloc(sizeof(t_philo *) * table->n_philo);
-	if (!philo)
+	ph = (t_philo **)malloc(sizeof(t_philo *) * table->n_philo);
+	if (!ph)
 		return (NULL);
 	i = 0;
 	while (i < (int)table->n_philo)
 	{
-		philo[i] = (t_philo *)malloc(sizeof(t_philo) * 1);
-		if (!philo[i])
+		ph[i] = (t_philo *)malloc(sizeof(t_philo) * 1);
+		if (!ph[i])
 			return (NULL);
-		if (pthread_mutex_init(&philo[i]->mutex_eating, NULL))
+		if (pthread_mutex_init(&ph[i]->mutex_eating, NULL))
 			return (NULL);
-		philo[i]->philo_n = i;
-		philo[i]->table = table;
-		philo[i]->is_eating = 0;
-		philo[i]->count = 0;
-		philo[i]->left_fork = i;
-		philo[i]->right_fork = (i + 1) % table->n_philo;
+		ph[i]->philo_n = i;
+		ph[i]->table = table;
+		ph[i]->is_eating = 0;
+		ph[i]->count = 0;
+		ph[i]->left_fork = i;
+		ph[i]->right_fork = (i + 1) % table->n_philo;
 		i++;
 	}
-	return (philo);
+	return (ph);
 }
 
 pthread_mutex_t	*fork_init(t_args	*table)
@@ -109,18 +109,18 @@ t_args	*init(int ac, char **av)
 	return (table);
 }
 
-void	take_fork(t_philo *philo)
+void	take_fork(t_philo *ph)
 {
-	pthread_mutex_lock(&philo->table->forks[philo->left_fork]);
-	message(philo->table, philo->philo_n, "has taken the left fork");
-	pthread_mutex_lock(&philo->table->forks[philo->right_fork]);
-	message(philo->table, philo->philo_n, "has taken the right fork");
-	pthread_mutex_lock(&philo->mutex_eating);
-	philo->last_eat = get_time();
-	philo->is_eating = 1;
-	message(philo->table, philo->philo_n, "is eating");
-	ft_usleep(philo->table->t_eat);
-	philo->is_eating = 0;
-	philo->count++;
-	pthread_mutex_unlock(&philo->mutex_eating);
+	pthread_mutex_lock(&ph->table->forks[ph->left_fork]);
+	message(ph->table, ph->philo_n, "has taken the left fork");
+	pthread_mutex_lock(&ph->table->forks[ph->right_fork]);
+	message(ph->table, ph->philo_n, "has taken the right fork");
+	pthread_mutex_lock(&ph->mutex_eating);
+	ph->last_eat = get_time();
+	ph->is_eating = 1;
+	message(ph->table, ph->philo_n, "is eating");
+	ft_usleep(ph->table->t_eat);
+	ph->is_eating = 0;
+	ph->count++;
+	pthread_mutex_unlock(&ph->mutex_eating);
 }
