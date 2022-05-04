@@ -42,7 +42,7 @@ void	*check_death(void *arg)
 	ph = ((t_philo *)arg);
 	while (ph->table->finish)
 	{
-		if (!ph->is_eating
+		if (!(ph->is_eating)
 			&& get_time() - ph->last_eat >= ph->table->t_die)
 		{
 			pthread_mutex_lock(&ph->mutex_eating);
@@ -53,7 +53,7 @@ void	*check_death(void *arg)
 		if (ph->table->t_must_eat
 			&& ph->count >= ph->table->t_must_eat)
 			check_eat(ph);
-		usleep(100);
+		ft_usleep(100);
 	}
 	return (NULL);
 }
