@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_utils2.c                                     :+:      :+:    :+:   */
+/*   philo_utils_B.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrossi <fgrossi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fgrossi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/27 15:48:03 by fgrossi           #+#    #+#             */
-/*   Updated: 2022/04/27 15:48:48 by fgrossi          ###   ########.fr       */
+/*   Created: 2022/05/04 15:17:28 by fgrossi           #+#    #+#             */
+/*   Updated: 2022/05/04 15:17:30 by fgrossi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../Incl/philo_B.h"
 
 int	get_time(void)
 {
@@ -22,11 +22,11 @@ int	get_time(void)
 
 void	message(t_args *table, int philo_n, char *msg)
 {
-	pthread_mutex_lock(&table->mutex_write);
+	sem_wait(table->write);
 	printf("[%d]\tPhilosopher %d %s\n", get_time() - table->start,
 		philo_n + 1, msg);
 	if (msg[0] != 'd')
-		pthread_mutex_unlock(&table->mutex_write);
+		sem_post(table->write);
 }
 
 void	ft_usleep(uint64_t time_in_ms)
@@ -39,16 +39,30 @@ void	ft_usleep(uint64_t time_in_ms)
 		usleep(time_in_ms / 10);
 }
 
-int	check_num(char *str)
+int	is_digit(char *string)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (string[i] != '\0')
 	{
-		if (str[i] < '0' || str[i] > '9')
+		if (string[i] < '0' || string[i] > '9')
 			return (1);
 		i++;
 	}
 	return (0);
+}
+
+void	close_processes(t_args *table)
+{
+	int	i;
+	int	status;
+
+	i = 0;
+	waitpid(-1, &status, 0);
+	if (WIFEXITED(status) || WIFSIGNALED(status))
+	{
+		while (i < table->n_philo)
+			kill(table->philo[i++]->philo_pid, SIGKILL);
+	}
 }

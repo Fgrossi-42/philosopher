@@ -6,7 +6,7 @@
 /*   By: fgrossi <fgrossi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:47:38 by fgrossi           #+#    #+#             */
-/*   Updated: 2022/04/27 15:47:39 by fgrossi          ###   ########.fr       */
+/*   Updated: 2022/04/29 12:16:51 by fgrossi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ void		eat(t_philo *ph);
 int			check_num(char *string);
 int			ft_atoi(const char *str);
 int			check(char **av, int ac);
+int			check_num(char *str);
 
 #endif

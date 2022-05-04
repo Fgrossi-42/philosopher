@@ -6,11 +6,11 @@
 /*   By: fgrossi <fgrossi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:48:03 by fgrossi           #+#    #+#             */
-/*   Updated: 2022/04/27 15:48:48 by fgrossi          ###   ########.fr       */
+/*   Updated: 2022/04/29 12:16:33 by fgrossi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../Incl/philo.h"
 
 int	get_time(void)
 {
@@ -37,18 +37,4 @@ void	ft_usleep(uint64_t time_in_ms)
 	start = get_time();
 	while ((get_time() - start) < time_in_ms)
 		usleep(time_in_ms / 10);
-}
-
-int	check_num(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (1);
-		i++;
-	}
-	return (0);
 }

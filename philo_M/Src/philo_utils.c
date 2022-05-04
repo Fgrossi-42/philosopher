@@ -6,34 +6,11 @@
 /*   By: fgrossi <fgrossi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:48:59 by fgrossi           #+#    #+#             */
-/*   Updated: 2022/04/28 11:45:43 by fgrossi          ###   ########.fr       */
+/*   Updated: 2022/04/29 12:17:29 by fgrossi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-
-int	check(char **av, int ac)
-{
-	int	i;
-
-	i = 1;
-	if (ac < 5 || ac > 6)
-	{
-		printf("Error\n");
-		return (1);
-	}
-	while (i < ac)
-	{
-		if (av[i][0] == '-' || check_num(av[i])
-			|| ft_atoi(av[i]) == 0)
-		{
-			printf("Error\n");
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
+#include "../Incl/philo.h"
 
 t_philo	**philo_init(t_args *table)
 {
