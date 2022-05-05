@@ -40,11 +40,11 @@ all: $(NAME)
 
 clean:
 	@rm -rf $(addprefix $(OBJS_DIR), $(SRCS_DIR))
-	@printf "\033[2K\r${YLW}[CLEAN]${RST} done$(END)"
+	@printf "\033[2K\r${YLW}[CLEAN]${RST} done$(END)\n"
 
 fclean: clean
 	@rm -f $(NAME)
-	@printf "\033[2K\r${RED}[DESTROYED]${RST} $(NAME)$(END)"
+	@printf "\033[2K\r${RED}[DESTROYED]${RST} $(NAME)$(END)\n"
 
 re: fclean all
 
